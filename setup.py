@@ -23,13 +23,13 @@ test.run_tests = run_tests
 
 
 setup(
-    name='click-default-group',
+    name='click-default-group-wheel',
     version=version,
     license='BSD',
     author='Heungsub Lee',
     author_email='sub@subl.ee',
     description=('Extends click.Group to invoke a '
-                 'command without explicit subcommand name'),
+                 'command without explicit subcommand name (packaged as a wheel)'),
     url='https://github.com/sublee/click-default-group/',
     long_description=long_description,
     long_description_content_type='text/markdown',
