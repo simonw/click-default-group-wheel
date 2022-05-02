@@ -1,0 +1,33 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10", "pypy3"]
+        click-version: ["7.0", "8.0", "8.1"]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+    - name: Install dependencies
+      env:
+        CLICK_VERSION: ${{ matrix.click-version }}
+      run: |
+        pip install click==$CLICK_VERSION
+        pip install -e .
+        pip install flake8 flake8-import-order pytest-cov coveralls
+    - name: flake8
+      run: |
+        flake8 click_default_group.py test.py setup.py -v --show-source
+    - name: Run tests
+      run: |
+        py.test -v --cov=click_default_group --cov-report=term-missing
+    - name: Coveralls
+      run: coveralls
