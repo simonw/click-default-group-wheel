@@ -23,12 +23,10 @@ jobs:
       run: |
         pip install click==$CLICK_VERSION
         pip install -e .
-        pip install flake8 flake8-import-order pytest-cov coveralls
+        pip install flake8 flake8-import-order pytest-cov
     - name: flake8
       run: |
         flake8 click_default_group.py test.py setup.py -v --show-source
     - name: Run tests
       run: |
         py.test -v --cov=click_default_group --cov-report=term-missing
-    - name: Coveralls
-      run: coveralls
